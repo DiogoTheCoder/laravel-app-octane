@@ -135,6 +135,8 @@ return [
     */
 
     'providers' => [
+        // Swoole
+        SwooleTW\Http\LaravelServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...

@@ -20,7 +20,20 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip \
     git \
+    libssl-dev \
+    openssl \
     curl
+
+# Install Swoole
+RUN cd /tmp && git clone https://github.com/swoole/swoole-src.git && \
+    cd swoole-src && \
+    git checkout v4.6.4 && \
+    phpize  && \
+    ./configure --enable-openssl -with-openssl-dir=/usr/lib/ && \
+    make && make install
+
+RUN touch /usr/local/etc/php/conf.d/swoole.ini && \
+    echo 'extension=swoole.so' > /usr/local/etc/php/conf.d/swoole.ini
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
